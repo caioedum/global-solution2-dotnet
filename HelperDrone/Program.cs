@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IDroneRepository, DroneRepository>();
 builder.Services.AddScoped<IAreaRiscoRepository, AreaRiscoRepository>();
+builder.Services.AddScoped<IAlertaRepository, AlertaRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("OracleConnection");
 
