@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperDrone", "HelperDrone.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperDrone.Tests", "..\HelperDrone.Tests\HelperDrone.Tests.csproj", "{205303BD-A91D-4610-BA6B-99B8BE66CA80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperDrone.Worker", "..\HelperDrone.Worker\HelperDrone.Worker.csproj", "{812244EA-AFDB-4FDE-8FED-51482F238BF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperDrone.WorkerService", "..\HelperDrone.WorkerService\HelperDrone.WorkerService.csproj", "{987194FF-1F97-4969-84B3-E9B0C74836EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{205303BD-A91D-4610-BA6B-99B8BE66CA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{205303BD-A91D-4610-BA6B-99B8BE66CA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{205303BD-A91D-4610-BA6B-99B8BE66CA80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{812244EA-AFDB-4FDE-8FED-51482F238BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{812244EA-AFDB-4FDE-8FED-51482F238BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{812244EA-AFDB-4FDE-8FED-51482F238BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{812244EA-AFDB-4FDE-8FED-51482F238BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{987194FF-1F97-4969-84B3-E9B0C74836EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{987194FF-1F97-4969-84B3-E9B0C74836EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{987194FF-1F97-4969-84B3-E9B0C74836EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{987194FF-1F97-4969-84B3-E9B0C74836EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

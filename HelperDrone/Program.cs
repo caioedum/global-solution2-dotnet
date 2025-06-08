@@ -1,39 +1,57 @@
 using HelperDrone.Contracts.Repositories;
 using HelperDrone.Repositories;
+using Microsoft.OpenApi.Models;
 using Oracle.ManagedDataAccess.Client;
+using RabbitMQ.Client;
 using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Add services to the container.
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IDroneRepository, DroneRepository>();
 builder.Services.AddScoped<IAreaRiscoRepository, AreaRiscoRepository>();
 builder.Services.AddScoped<IAlertaRepository, AlertaRepository>();
 
-var connectionString = builder.Configuration.GetConnectionString("OracleConnection");
+builder.Services.AddSingleton<IConnection>(sp =>
+{
+    var configuration = builder.Configuration;
+    var factory = new ConnectionFactory()
+    {
+        HostName = "rabbitmq",
+        Port = 5672,           
+        UserName = "admin",
+        Password = "password",
+        DispatchConsumersAsync = true
+    };
 
+    return factory.CreateConnection();
+});
+
+
+var connectionString = builder.Configuration.GetConnectionString("OracleConnection");
 builder.Services.AddScoped<IDbConnection>(sp => new OracleConnection(connectionString));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HelperDrone API", Version = "v1" });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "HelperDrone V1");
+    });
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
