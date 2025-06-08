@@ -1,0 +1,6 @@
+@HelperDrone_HostAddress = http://localhost:5251
+
+GET {{HelperDrone_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
