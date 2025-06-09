@@ -116,8 +116,6 @@ dotnet test
     - Os resultados dos testes serão exibidos no terminal.
     - Todos os métodos principais das controllers estão cobertos por testes.
       
----
-
 ## Licença
 
 - Este projeto é de uso acadêmico - FIAP.
