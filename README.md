@@ -6,6 +6,12 @@ O **iHelperDrone** é uma API RESTful desenvolvida em .NET 8 para monitoramento 
 
 ---
 
+## Integrantes do Grupo
+
+- **Caio Eduardo Nascimento Martins - RM554025**
+- **Julia Mariano Barsotti Ferreira - RM552713**
+- **Leonardo Gaspar Saheb - RM553383**
+
 ## Tecnologias Utilizadas
 
 - **.NET 8 (ASP.NET Core Web API)**
@@ -109,7 +115,10 @@ dotnet test
 3. **Verifique os resultados:**
     - Os resultados dos testes serão exibidos no terminal.
     - Todos os métodos principais das controllers estão cobertos por testes.
-
+      
 ---
 
+## Licença
+
+- Este projeto é de uso acadêmico - FIAP.
 
