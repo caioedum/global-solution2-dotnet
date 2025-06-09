@@ -91,7 +91,6 @@ A documentação completa está disponível via Swagger em `/swagger`.
 - `GET /api/alertas` — Lista todos os alertas
 - `GET /api/alertas/{id}` — Busca alerta por ID
 - `POST /api/alertas` — Adiciona novo alerta
-- `POST /api/alertas/enviar-alertas` — Adiciona e envia alerta via RabbitMQ
 - `PUT /api/alertas/{id}` — Atualiza alerta
 - `DELETE /api/alertas/{id}` — Remove alerta
 - `GET /api/alertas/por-area/{areaId}` — Alertas por área de risco
