@@ -1,4 +1,5 @@
 using HelperDrone.Contracts.Repositories;
+using HelperDrone.Models;
 using HelperDrone.Repositories;
 using Microsoft.OpenApi.Models;
 using Oracle.ManagedDataAccess.Client;
@@ -11,22 +12,11 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IDroneRepository, DroneRepository>();
 builder.Services.AddScoped<IAreaRiscoRepository, AreaRiscoRepository>();
 builder.Services.AddScoped<IAlertaRepository, AlertaRepository>();
+builder.Services.AddScoped<SentimentAnalysis>();
 
-builder.Services.AddSingleton<IConnection>(sp =>
-{
-    var configuration = builder.Configuration;
-    var factory = new ConnectionFactory()
-    {
-        HostName = "rabbitmq",
-        Port = 5672,           
-        UserName = "admin",
-        Password = "password",
-        DispatchConsumersAsync = true
-    };
+var sentimentAnalysis = new SentimentAnalysis();
 
-    return factory.CreateConnection();
-});
-
+sentimentAnalysis.TrainModel();
 
 var connectionString = builder.Configuration.GetConnectionString("OracleConnection");
 builder.Services.AddScoped<IDbConnection>(sp => new OracleConnection(connectionString));

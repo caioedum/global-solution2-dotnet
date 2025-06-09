@@ -12,12 +12,13 @@ namespace HelperDrone.Controllers
     public class AlertasController : ControllerBase
     {
         private readonly IAlertaRepository _alertaRepository;
-        private readonly IConnection _rabbitConnection;
+        private readonly SentimentAnalysis _sentimentAnalysis;
 
-        public AlertasController(IAlertaRepository alertaRepository, IConnection rabbitConnection)
+        public AlertasController(IAlertaRepository alertaRepository, SentimentAnalysis sentimentAnalysis)
         {
             _alertaRepository = alertaRepository;
-            _rabbitConnection = rabbitConnection;
+            _sentimentAnalysis = sentimentAnalysis;
+            _sentimentAnalysis.LoadModel();
         }
 
         [HttpGet]
@@ -36,38 +37,23 @@ namespace HelperDrone.Controllers
             return Ok(alerta);
         }
 
+        [HttpPost("analisar-sentimento")]
+        public ActionResult<object> AnalisarSentimento([FromBody] string texto)
+        {
+            var prediction = _sentimentAnalysis.Predict(texto);
+            return Ok(new
+            {
+                Texto = texto,
+                Sentimento = prediction.Prediction ? "Positivo" : "Negativo",
+                Probabilidade = prediction.Probability
+            });
+        }
+
         [HttpPost]
         public ActionResult AdicionarAlerta([FromBody] Alerta alerta)
         {
             _alertaRepository.AdicionarAlerta(alerta);
             return CreatedAtAction(nameof(ObterPorId), new { id = alerta.IdAlerta }, alerta);
-        }
-
-        [HttpPost("enviar-alertas")]
-        public async Task<ActionResult> CriarAlerta([FromBody] Alerta alerta)
-        {
-            try
-            {
-                _alertaRepository.AdicionarAlerta(alerta);
-
-                using var channel = _rabbitConnection.CreateModel();
-                channel.QueueDeclare(queue: "alertas", durable: true, exclusive: false, autoDelete: false);
-
-                var mensagem = JsonSerializer.Serialize(alerta);
-                var body = Encoding.UTF8.GetBytes(mensagem);
-
-                channel.BasicPublish(
-                    exchange: "",
-                    routingKey: "alertas",
-                    basicProperties: null,
-                    body: body);
-
-                return CreatedAtAction(nameof(ObterPorId), new { id = alerta.IdAlerta }, alerta);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Mensagem = "Erro ao processar alerta.", Detalhes = ex.Message });
-            }
         }
 
         [HttpPut("{id}")]
